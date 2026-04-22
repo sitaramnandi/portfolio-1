@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Baladeveswar Biswavikash Nandi · dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #7d8590;
+    --cyan: #79c0ff;
+    --green: #56d364;
+    --purple: #d2a8ff;
+    --orange: #ffa657;
+    --yellow: #e3b341;
+    --pink: #ff7b72;
+  }
+  html { font-family: 'JetBrains Mono', monospace; background: var(--bg); color: var(--text); line-height: 1.6; }
+  body { max-width: 900px; margin: 0 auto; padding: 0 0 80px; }
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Top bar ── */
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+  .dots { display: flex; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+  .tab { font-size: 0.75rem; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); border-bottom: none; padding: 4px 16px; border-radius: 6px 6px 0 0; margin-left: 12px; }
+  .tab-active { color: var(--text); }
+
+  /* ── Layout ── */
+  .layout { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+  @media (max-width: 680px) { .layout { grid-template-columns: 1fr; } .sidebar { border-right: none; border-bottom: 1px solid var(--border); } }
+
+  /* ── Sidebar ── */
+  .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 28px 20px; }
+  .avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--purple)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: var(--bg); margin-bottom: 16px; }
+  .sidebar-name { font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); }
+  .sidebar-title { font-size: 0.75rem; color: var(--muted); margin-top: 2px; margin-bottom: 20px; }
+  .sidebar-links { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+  .sidebar-link { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .sidebar-link a { color: var(--cyan); }
+  .sidebar-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin: 20px 0 10px; }
+  .lang-item { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--text); margin-bottom: 8px; }
+  .lang-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .lang-bar-wrap { flex: 1; height: 4px; background: var(--surface2); border-radius: 2px; margin: 0 8px; }
+  .lang-bar { height: 100%; border-radius: 2px; }
+
+  /* ── Main ── */
+  main { padding: 28px 32px; }
+  .section-comment { font-size: 0.7rem; color: var(--muted); margin-bottom: 4px; }
+  .section-keyword { font-size: 0.75rem; color: var(--purple); font-weight: 600; margin-bottom: 12px; letter-spacing: 0.02em; }
+  section { margin-bottom: 36px; }
+
+  /* ── Summary ── */
+  .summary-block { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; font-size: 0.875rem; color: #8b949e; line-height: 1.75; border-left: 3px solid var(--cyan); }
+
+  /* ── Experience ── */
+  .exp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; }
+  .exp-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .exp-role { font-family: 'Inter', sans-serif; font-size: 0.9375rem; font-weight: 700; color: var(--text); }
+  .exp-company { font-size: 0.8rem; color: var(--cyan); }
+  .exp-dur { font-size: 0.7rem; color: var(--muted); }
+  .exp-bullets { list-style: none; margin-top: 10px; display: flex; flex-direction: column; gap: 5px; }
+  .exp-bullets li { font-size: 0.8rem; color: #8b949e; padding-left: 16px; position: relative; line-height: 1.55; }
+  .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--green); font-size: 0.6rem; top: 3px; }
+
+  /* ── Skills ── */
+  .skill-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip { font-size: 0.72rem; padding: 3px 10px; border-radius: 20px; border: 1px solid; font-weight: 500; }
+  .chip-cyan  { border-color: #1f6feb; color: var(--cyan); background: rgba(79,192,255,0.07); }
+  .chip-green { border-color: #2ea043; color: var(--green); background: rgba(86,211,100,0.07); }
+  .chip-purple{ border-color: #8957e5; color: var(--purple); background: rgba(210,168,255,0.07); }
+  .chip-orange{ border-color: #bd561d; color: var(--orange); background: rgba(255,166,87,0.07); }
+
+  /* ── Projects ── */
+  .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .proj-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s; }
+  .proj-card:hover { border-color: #58a6ff; }
+  .proj-name { font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 700; color: var(--cyan); display: flex; align-items: center; justify-content: space-between; }
+  .proj-desc { font-size: 0.775rem; color: #8b949e; line-height: 1.55; flex: 1; }
+  .proj-tech { display: flex; flex-wrap: wrap; gap: 5px; }
+  .proj-tech span { font-size: 0.65rem; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 7px; }
+  .proj-link { font-size: 0.7rem; color: var(--cyan); }
+
+  /* ── Education ── */
+  .edu-item { margin-bottom: 12px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+  .edu-school { font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 700; color: var(--text); }
+  .edu-degree { font-size: 0.775rem; color: var(--muted); margin-top: 2px; }
+  .edu-year { font-size: 0.7rem; color: var(--purple); margin-top: 4px; }
+
+  /* ── Certs ── */
+  .cert-item { font-size: 0.8rem; color: #8b949e; padding: 6px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .cert-item::before { content: '✓'; color: var(--green); font-size: 0.7rem; }
+
+  footer { margin: 32px 32px 0; padding-top: 16px; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="dots">
+    <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+  </div>
+  <div class="tab tab-active">~/baladeveswar-biswavikash-nandi/portfolio.dev</div>
+</div>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="avatar">B</div>
+    <div class="sidebar-name">Baladeveswar Biswavikash Nandi</div>
+    <div class="sidebar-title">Senior Software Engineer</div>
+
+    <div class="sidebar-links">
+      <div class="sidebar-link"><span>📍</span><span>Hyderabad, India</span></div>
+      <div class="sidebar-link"><span>✉</span><a href="mailto:bv.bikash607@gmail.com">bv.bikash607@gmail.com</a></div>
+      
+      
+      
+    </div>
+
+    
+    <div class="sidebar-label">// top skills</div>
+    
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> C#
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> .NET Core
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> Angular
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> SQL Server
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> Web API
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> Entity Framework
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> LINQ
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> Microservices
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> Design Patterns
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> Unit Testing
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> GIT
+    </div>
+    
+    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
+      <span style="color:var(--green);">$</span> Docker
+    </div>
+    
+    
+  </aside>
+
+  <!-- Main -->
+  <main>
+    
+    <section>
+      <div class="section-comment">// professional summary</div>
+      <div class="section-keyword">const about = `</div>
+      <div class="summary-block">Highly skilled and results-oriented Senior Software Engineer with over 7 years of experience in designing, developing, and optimizing robust, scalable enterprise applications and microservices. Proficient in C#, .NET Core, Angular, SQL Server, and cloud platforms (AWS, Azure DevOps). Demonstrated expertise in architecting high-performance solutions, leading to significant improvements in system efficiency (up to 45% performance increase), substantial cost reductions ($55K/quarter), and enhanced code quality (90% code coverage, 70% bug reduction). Proven ability to deliver impactful solutions for large-scale digital platforms and critical business operations, driving customer satisfaction and revenue growth.</div>
+    </section>
+    
+
+    
+    <section>
+      <div class="section-comment">// work history</div>
+      <div class="section-keyword">const experience = [</div>
+      
+      <div class="exp-card">
+        <div class="exp-head">
+          <div>
+            <div class="exp-role">Senior Software Engineer</div>
+            <div class="exp-company">Value Labs &nbsp;·&nbsp; Hyderabad, India</div>
+          </div>
+          <div class="exp-dur">07/2022 - Present</div>
+        </div>
+        
+        <ul class="exp-bullets">
+          <li>Developed an Orchestrator microservice to manage state among multiple complex microservices, reducing network communication and improving message delivery time by 50%, and decreasing message delivery failures by 30%.</li><li>Designed and developed enterprise-level microservice applications for Denmark’s largest digital postbox platform, enabling the successful delivery of 559 million documents annually.</li><li>Revamped existing microservices and implemented unit testing projects, achieving 90% code coverage and resulting in a 25% reduction in bugs.</li>
+        </ul>
+        
+      </div>
+      
+      <div class="exp-card">
+        <div class="exp-head">
+          <div>
+            <div class="exp-role">Software System Engineer</div>
+            <div class="exp-company">IBM &nbsp;·&nbsp; Bangalore, India</div>
+          </div>
+          <div class="exp-dur">03/2021 - 04/2022</div>
+        </div>
+        
+        <ul class="exp-bullets">
+          <li>Designed and implemented scalable APIs, transitioning an ASP.NET service to an Angular web application and .NET Core microservices architecture, resulting in a 45% increase in performance and a $55K reduction in operational costs per quarter.</li><li>Created enterprise applications to facilitate the addition of new internet services to existing packages, improving customer satisfaction by 30% and contributing to a 15% increase in the Internet Line of Business (LOB) revenue for Canada&#39;s Largest Communications Provider.</li><li>Optimized business logic and performed critical bug fixes for the order capturing application, leading to a 20% increase in user engagement and a 15% reduction in service integration time.</li>
+        </ul>
+        
+      </div>
+      
+      <div class="exp-card">
+        <div class="exp-head">
+          <div>
+            <div class="exp-role">Software Engineer</div>
+            <div class="exp-company">DreamOrbit &nbsp;·&nbsp; Bangalore, India</div>
+          </div>
+          <div class="exp-dur">05/2017 - 02/2021</div>
+        </div>
+        
+        <ul class="exp-bullets">
+          <li>Designed and implemented a robust microservices architecture to seamlessly synchronize data between legacy and modern applications, ensuring real-time, bidirectional data consistency. Improved operational efficiency by 40%, reduced data inconsistencies by 95%, and enhanced customer satisfaction by enabling smooth transitions to the new application.</li><li>Designed and developed the Customer Management Module for North America&#39;s largest logistics company, enabling the onboarding of 20,000 new customers in a quarter, a 56% increase from the previous quarter.</li><li>Collaborated with the project architect and team lead to successfully integrate Active Directory authentication with JWT and streamline transaction management within APIs.</li><li>Implemented comprehensive unit testing and conducted extensive code refactoring, achieving 85% code coverage. Applied design patterns to enhance code structure, significantly improving code quality, reducing bugs by 70%, and enhancing maintainability, resulting in more reliable and efficient project delivery.</li>
+        </ul>
+        
+      </div>
+      
+    </section>
+    
+
+    
+
+    
+    <section>
+      <div class="section-comment">// languages & tools</div>
+      <div class="section-keyword">const skills = [</div>
+      <div class="skill-chips">
+        
+        
+        <span class="chip chip-cyan">C#</span>
+        
+        <span class="chip chip-green">.NET Core</span>
+        
+        <span class="chip chip-purple">Angular</span>
+        
+        <span class="chip chip-orange">SQL Server</span>
+        
+        <span class="chip chip-cyan">Web API</span>
+        
+        <span class="chip chip-green">Entity Framework</span>
+        
+        <span class="chip chip-purple">LINQ</span>
+        
+        <span class="chip chip-orange">Microservices</span>
+        
+        <span class="chip chip-cyan">Design Patterns</span>
+        
+        <span class="chip chip-green">Unit Testing</span>
+        
+        <span class="chip chip-purple">GIT</span>
+        
+        <span class="chip chip-orange">Docker</span>
+        
+        <span class="chip chip-cyan">TFS</span>
+        
+        <span class="chip chip-green">OOP</span>
+        
+        <span class="chip chip-purple">SOLID</span>
+        
+        <span class="chip chip-orange">RabbitMQ</span>
+        
+        <span class="chip chip-cyan">CI/CD</span>
+        
+        <span class="chip chip-green">Azure DevOps</span>
+        
+        <span class="chip chip-purple">Xunit</span>
+        
+        <span class="chip chip-orange">Backend</span>
+        
+        <span class="chip chip-cyan">Full Stack</span>
+        
+        <span class="chip chip-green">AWS SNS</span>
+        
+        <span class="chip chip-purple">AWS S3</span>
+        
+        <span class="chip chip-orange">GraphQL</span>
+        
+        <span class="chip chip-cyan">REST API</span>
+        
+        <span class="chip chip-green">AGILE</span>
+        
+        <span class="chip chip-purple">TDD</span>
+        
+        <span class="chip chip-orange">DDD</span>
+        
+        <span class="chip chip-cyan">ASP.NET</span>
+        
+        <span class="chip chip-green">Active Directory</span>
+        
+        <span class="chip chip-purple">JWT</span>
+        
+      </div>
+    </section>
+    
+
+    
+    <section>
+      <div class="section-comment">// education</div>
+      <div class="section-keyword">const education = [</div>
+      
+      <div class="edu-item">
+        <div class="edu-school">Biju Patnaik University of Technology</div>
+        <div class="edu-degree">BTech in Computer Science &amp; Engineering</div>
+        <div class="edu-year">2014</div>
+      </div>
+      
+    </section>
+    
+
+    
+
+    <footer>// generated with CareerPortal · Baladeveswar Biswavikash Nandi</footer>
+  </main>
+</div>
+
+</body>
+</html>
