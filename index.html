@@ -3,344 +3,315 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Baladeveswar Biswavikash Nandi · dev</title>
+<title>Baladeveswar Biswavikash Nandi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #0d1117;
-    --surface: #161b22;
-    --surface2: #21262d;
-    --border: #30363d;
-    --text: #e6edf3;
-    --muted: #7d8590;
-    --cyan: #79c0ff;
-    --green: #56d364;
-    --purple: #d2a8ff;
-    --orange: #ffa657;
-    --yellow: #e3b341;
-    --pink: #ff7b72;
+    --bg: #09090f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: #ffffff12;
+    --text: #f0f0f8;
+    --muted: #7070a0;
+    --a: #a78bfa;
+    --b: #38bdf8;
+    --c: #f472b6;
+    --d: #34d399;
   }
-  html { font-family: 'JetBrains Mono', monospace; background: var(--bg); color: var(--text); line-height: 1.6; }
-  body { max-width: 900px; margin: 0 auto; padding: 0 0 80px; }
-  a { color: var(--cyan); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  html { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; scroll-behavior: smooth; }
+  body { overflow-x: hidden; }
+  a { color: var(--b); text-decoration: none; }
 
-  /* ── Top bar ── */
-  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
-  .dots { display: flex; gap: 6px; }
-  .dot { width: 12px; height: 12px; border-radius: 50%; }
-  .dot-r { background: #ff5f57; }
-  .dot-y { background: #febc2e; }
-  .dot-g { background: #28c840; }
-  .tab { font-size: 0.75rem; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); border-bottom: none; padding: 4px 16px; border-radius: 6px 6px 0 0; margin-left: 12px; }
-  .tab-active { color: var(--text); }
+  /* ── Navbar ── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; backdrop-filter: blur(20px); background: rgba(9,9,15,0.8); border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-name { font-size: 1rem; font-weight: 800; background: linear-gradient(90deg, var(--a), var(--b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
 
-  /* ── Layout ── */
-  .layout { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
-  @media (max-width: 680px) { .layout { grid-template-columns: 1fr; } .sidebar { border-right: none; border-bottom: 1px solid var(--border); } }
+  /* ── Hero ── */
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 24px 80px; text-align: center; position: relative; overflow: hidden; }
+  .hero-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(167,139,250,0.12) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface2); font-size: 0.75rem; color: var(--muted); margin-bottom: 24px; }
+  .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--d); flex-shrink: 0; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .hero h1 { font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 16px; }
+  .hero h1 .grad { background: linear-gradient(135deg, var(--a) 0%, var(--b) 50%, var(--c) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-title { font-size: 1.1rem; font-weight: 600; color: var(--a); margin-bottom: 20px; }
+  .hero-summary { font-size: 1rem; color: var(--muted); max-width: 560px; line-height: 1.8; margin-bottom: 32px; }
+  .hero-links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 100px; background: linear-gradient(135deg, var(--a), var(--b)); color: #fff; font-size: 0.9rem; font-weight: 700; transition: opacity 0.2s, transform 0.2s; }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-size: 0.9rem; font-weight: 600; transition: border-color 0.2s; }
+  .btn-outline:hover { border-color: var(--a); }
+  .hero-meta { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; justify-content: center; font-size: 0.8rem; color: var(--muted); }
 
-  /* ── Sidebar ── */
-  .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 28px 20px; }
-  .avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--purple)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: var(--bg); margin-bottom: 16px; }
-  .sidebar-name { font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); }
-  .sidebar-title { font-size: 0.75rem; color: var(--muted); margin-top: 2px; margin-bottom: 20px; }
-  .sidebar-links { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-  .sidebar-link { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
-  .sidebar-link a { color: var(--cyan); }
-  .sidebar-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin: 20px 0 10px; }
-  .lang-item { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--text); margin-bottom: 8px; }
-  .lang-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .lang-bar-wrap { flex: 1; height: 4px; background: var(--surface2); border-radius: 2px; margin: 0 8px; }
-  .lang-bar { height: 100%; border-radius: 2px; }
+  /* ── Section wrapper ── */
+  .section { max-width: 1000px; margin: 0 auto; padding: 80px 24px; }
+  .section-header { text-align: center; margin-bottom: 48px; }
+  .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--a); margin-bottom: 10px; }
+  .section-title { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; }
 
-  /* ── Main ── */
-  main { padding: 28px 32px; }
-  .section-comment { font-size: 0.7rem; color: var(--muted); margin-bottom: 4px; }
-  .section-keyword { font-size: 0.75rem; color: var(--purple); font-weight: 600; margin-bottom: 12px; letter-spacing: 0.02em; }
-  section { margin-bottom: 36px; }
-
-  /* ── Summary ── */
-  .summary-block { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; font-size: 0.875rem; color: #8b949e; line-height: 1.75; border-left: 3px solid var(--cyan); }
-
-  /* ── Experience ── */
-  .exp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; }
-  .exp-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-  .exp-role { font-family: 'Inter', sans-serif; font-size: 0.9375rem; font-weight: 700; color: var(--text); }
-  .exp-company { font-size: 0.8rem; color: var(--cyan); }
-  .exp-dur { font-size: 0.7rem; color: var(--muted); }
-  .exp-bullets { list-style: none; margin-top: 10px; display: flex; flex-direction: column; gap: 5px; }
-  .exp-bullets li { font-size: 0.8rem; color: #8b949e; padding-left: 16px; position: relative; line-height: 1.55; }
-  .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--green); font-size: 0.6rem; top: 3px; }
+  /* ── Divider ── */
+  .divider { width: 100%; height: 1px; background: var(--border); }
 
   /* ── Skills ── */
-  .skill-chips { display: flex; flex-wrap: wrap; gap: 7px; }
-  .chip { font-size: 0.72rem; padding: 3px 10px; border-radius: 20px; border: 1px solid; font-weight: 500; }
-  .chip-cyan  { border-color: #1f6feb; color: var(--cyan); background: rgba(79,192,255,0.07); }
-  .chip-green { border-color: #2ea043; color: var(--green); background: rgba(86,211,100,0.07); }
-  .chip-purple{ border-color: #8957e5; color: var(--purple); background: rgba(210,168,255,0.07); }
-  .chip-orange{ border-color: #bd561d; color: var(--orange); background: rgba(255,166,87,0.07); }
+  .skills-wrap { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .skill-pill { padding: 6px 18px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; border: 1px solid; transition: transform 0.15s; }
+  .skill-pill:hover { transform: translateY(-2px); }
+  .pill-a { border-color: rgba(167,139,250,0.4); color: var(--a); background: rgba(167,139,250,0.08); }
+  .pill-b { border-color: rgba(56,189,248,0.4); color: var(--b); background: rgba(56,189,248,0.08); }
+  .pill-c { border-color: rgba(244,114,182,0.4); color: var(--c); background: rgba(244,114,182,0.08); }
+  .pill-d { border-color: rgba(52,211,153,0.4); color: var(--d); background: rgba(52,211,153,0.08); }
+
+  /* ── Experience ── */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--a), var(--b), var(--c)); border-radius: 2px; }
+  .tl-item { position: relative; margin-bottom: 36px; }
+  .tl-dot { position: absolute; left: -34px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, var(--a), var(--b)); box-shadow: 0 0 12px rgba(167,139,250,0.5); }
+  .tl-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 24px; transition: border-color 0.2s; }
+  .tl-card:hover { border-color: rgba(167,139,250,0.3); }
+  .tl-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tl-role { font-size: 1rem; font-weight: 800; }
+  .tl-company { font-size: 0.875rem; font-weight: 600; color: var(--a); }
+  .tl-dur { font-size: 0.75rem; color: var(--muted); }
+  .tl-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .tl-bullets li { font-size: 0.875rem; color: var(--muted); padding-left: 16px; position: relative; line-height: 1.6; }
+  .tl-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--b); font-size: 0.7rem; top: 4px; }
 
   /* ── Projects ── */
-  .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
-  .proj-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s; }
-  .proj-card:hover { border-color: #58a6ff; }
-  .proj-name { font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 700; color: var(--cyan); display: flex; align-items: center; justify-content: space-between; }
-  .proj-desc { font-size: 0.775rem; color: #8b949e; line-height: 1.55; flex: 1; }
-  .proj-tech { display: flex; flex-wrap: wrap; gap: 5px; }
-  .proj-tech span { font-size: 0.65rem; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 7px; }
-  .proj-link { font-size: 0.7rem; color: var(--cyan); }
+  .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .proj-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+  .proj-card:hover { border-color: rgba(167,139,250,0.3); transform: translateY(-3px); }
+  .proj-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--a), var(--b), var(--c)); }
+  .proj-num { position: absolute; top: 20px; right: 20px; font-size: 2rem; font-weight: 900; color: var(--surface2); line-height: 1; }
+  .proj-name { font-size: 1rem; font-weight: 800; position: relative; }
+  .proj-name a { color: var(--text); }
+  .proj-name a:hover { color: var(--a); }
+  .proj-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; flex: 1; position: relative; }
+  .proj-tech { display: flex; flex-wrap: wrap; gap: 6px; position: relative; }
+  .proj-tech span { font-size: 0.7rem; padding: 2px 10px; border-radius: 100px; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); font-weight: 500; }
+  .proj-links { display: flex; gap: 12px; font-size: 0.75rem; font-weight: 600; position: relative; }
 
   /* ── Education ── */
-  .edu-item { margin-bottom: 12px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
-  .edu-school { font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 700; color: var(--text); }
-  .edu-degree { font-size: 0.775rem; color: var(--muted); margin-top: 2px; }
-  .edu-year { font-size: 0.7rem; color: var(--purple); margin-top: 4px; }
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .edu-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 24px; position: relative; overflow: hidden; }
+  .edu-card::after { content: ''; position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, rgba(167,139,250,0.15), transparent); }
+  .edu-school { font-size: 0.9375rem; font-weight: 800; margin-bottom: 4px; }
+  .edu-degree { font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; }
+  .edu-year { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: 100px; background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.25); color: var(--a); }
 
   /* ── Certs ── */
-  .cert-item { font-size: 0.8rem; color: #8b949e; padding: 6px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
-  .cert-item::before { content: '✓'; color: var(--green); font-size: 0.7rem; }
+  .certs-list { display: flex; flex-direction: column; gap: 10px; }
+  .cert-item { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 20px; font-size: 0.875rem; font-weight: 500; }
+  .cert-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--a), var(--b)); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
 
-  footer { margin: 32px 32px 0; padding-top: 16px; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--muted); }
+  /* ── Footer ── */
+  footer { text-align: center; padding: 40px 24px; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--border); }
+
+  @media (max-width: 640px) { .nav-links { display: none; } .hero h1 { font-size: 2.5rem; } }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="dots">
-    <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+<!-- Nav -->
+<nav>
+  <div class="nav-name">Baladeveswar Biswavikash Nandi</div>
+  <div class="nav-links">
+    <a href="#experience">Work</a>
+    
+    <a href="#skills">Skills</a>
+    <a href="mailto:bv.bikash607@gmail.com">Contact</a>
   </div>
-  <div class="tab tab-active">~/baladeveswar-biswavikash-nandi/portfolio.dev</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge"><span></span>Available for new opportunities</div>
+  <h1><span class="grad">Baladeveswar Biswavikash Nandi</span></h1>
+  <p class="hero-title">Senior Software Engineer</p>
+  <p class="hero-summary">Highly accomplished Senior Software Engineer with nearly 7 years of experience in designing, developing, and deploying robust, scalable microservices architectures and full-stack applications. Proficient in C#, .NET Core, Angular, and SQL Server, with a strong command of architectural patterns (Microservices, DDD, Design Patterns) and DevOps practices (CI/CD, Azure DevOps, Docker, AWS). Proven track record of optimizing system performance, reducing operational costs, and delivering high-quality, enterprise-level solutions that drive significant business impact and enhance user engagement.</p>
+  <div class="hero-links">
+    <a class="btn-primary" href="GitHub" target="_blank" rel="noopener">GitHub ↗</a>
+    <a class="btn-outline" href="LinkedIn" target="_blank" rel="noopener">LinkedIn ↗</a>
+    
+    
+  </div>
+  <div class="hero-meta">
+    <span>📍 Hyderabad, India</span>
+    <span>✉ bv.bikash607@gmail.com</span>
+    <span>9035851062</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<div class="section" id="skills">
+  <div class="section-header">
+    <div class="section-label">What I work with</div>
+    <h2 class="section-title">Skills & Tools</h2>
+  </div>
+  <div class="skills-wrap">
+    
+    
+    <span class="skill-pill pill-a">C#</span>
+    
+    <span class="skill-pill pill-b">.NET Core</span>
+    
+    <span class="skill-pill pill-c">Angular</span>
+    
+    <span class="skill-pill pill-d">SQL Server</span>
+    
+    <span class="skill-pill pill-a">Web API</span>
+    
+    <span class="skill-pill pill-b">Entity Framework</span>
+    
+    <span class="skill-pill pill-c">LINQ</span>
+    
+    <span class="skill-pill pill-d">Microservices</span>
+    
+    <span class="skill-pill pill-a">Design Patterns</span>
+    
+    <span class="skill-pill pill-b">Unit Testing</span>
+    
+    <span class="skill-pill pill-c">GIT</span>
+    
+    <span class="skill-pill pill-d">Docker</span>
+    
+    <span class="skill-pill pill-a">TFS</span>
+    
+    <span class="skill-pill pill-b">OOP</span>
+    
+    <span class="skill-pill pill-c">SOLID</span>
+    
+    <span class="skill-pill pill-d">RabbitMQ</span>
+    
+    <span class="skill-pill pill-a">CI/CD</span>
+    
+    <span class="skill-pill pill-b">Azure DevOps</span>
+    
+    <span class="skill-pill pill-c">Xunit</span>
+    
+    <span class="skill-pill pill-d">Backend</span>
+    
+    <span class="skill-pill pill-a">Full Stack</span>
+    
+    <span class="skill-pill pill-b">AWS SNS</span>
+    
+    <span class="skill-pill pill-c">AWS S3</span>
+    
+    <span class="skill-pill pill-d">GraphQL</span>
+    
+    <span class="skill-pill pill-a">REST API</span>
+    
+    <span class="skill-pill pill-b">AGILE</span>
+    
+    <span class="skill-pill pill-c">SOLID Principle</span>
+    
+    <span class="skill-pill pill-d">TDD</span>
+    
+    <span class="skill-pill pill-a">DDD</span>
+    
+  </div>
 </div>
+<div class="divider"></div>
 
-<div class="layout">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="avatar">B</div>
-    <div class="sidebar-name">Baladeveswar Biswavikash Nandi</div>
-    <div class="sidebar-title">Senior Software Engineer</div>
 
-    <div class="sidebar-links">
-      <div class="sidebar-link"><span>📍</span><span>Hyderabad, India</span></div>
-      <div class="sidebar-link"><span>✉</span><a href="mailto:bv.bikash607@gmail.com">bv.bikash607@gmail.com</a></div>
-      
-      
-      
-    </div>
 
+<div class="section" id="experience">
+  <div class="section-header">
+    <div class="section-label">Where I've been</div>
+    <h2 class="section-title">Experience</h2>
+  </div>
+  <div class="timeline">
     
-    <div class="sidebar-label">// top skills</div>
-    
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> C#
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> .NET Core
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> Angular
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> SQL Server
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> Web API
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> Entity Framework
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> LINQ
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> Microservices
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> Design Patterns
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> Unit Testing
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> GIT
-    </div>
-    
-    <div style="font-size:0.72rem; padding:3px 0; color:#8b949e;">
-      <span style="color:var(--green);">$</span> Docker
-    </div>
-    
-    
-  </aside>
-
-  <!-- Main -->
-  <main>
-    
-    <section>
-      <div class="section-comment">// professional summary</div>
-      <div class="section-keyword">const about = `</div>
-      <div class="summary-block">Highly skilled and results-oriented Senior Software Engineer with over 7 years of experience in designing, developing, and optimizing robust, scalable enterprise applications and microservices. Proficient in C#, .NET Core, Angular, SQL Server, and cloud platforms (AWS, Azure DevOps). Demonstrated expertise in architecting high-performance solutions, leading to significant improvements in system efficiency (up to 45% performance increase), substantial cost reductions ($55K/quarter), and enhanced code quality (90% code coverage, 70% bug reduction). Proven ability to deliver impactful solutions for large-scale digital platforms and critical business operations, driving customer satisfaction and revenue growth.</div>
-    </section>
-    
-
-    
-    <section>
-      <div class="section-comment">// work history</div>
-      <div class="section-keyword">const experience = [</div>
-      
-      <div class="exp-card">
-        <div class="exp-head">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-head">
           <div>
-            <div class="exp-role">Senior Software Engineer</div>
-            <div class="exp-company">Value Labs &nbsp;·&nbsp; Hyderabad, India</div>
+            <div class="tl-role">Senior Software Engineer</div>
+            <div class="tl-company">Value Labs · Hyderabad, India</div>
           </div>
-          <div class="exp-dur">07/2022 - Present</div>
+          <div class="tl-dur">07/2022 - Present</div>
         </div>
         
-        <ul class="exp-bullets">
+        <ul class="tl-bullets">
           <li>Developed an Orchestrator microservice to manage state among multiple complex microservices, reducing network communication and improving message delivery time by 50%, and decreasing message delivery failures by 30%.</li><li>Designed and developed enterprise-level microservice applications for Denmark’s largest digital postbox platform, enabling the successful delivery of 559 million documents annually.</li><li>Revamped existing microservices and implemented unit testing projects, achieving 90% code coverage and resulting in a 25% reduction in bugs.</li>
         </ul>
         
       </div>
-      
-      <div class="exp-card">
-        <div class="exp-head">
+    </div>
+    
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-head">
           <div>
-            <div class="exp-role">Software System Engineer</div>
-            <div class="exp-company">IBM &nbsp;·&nbsp; Bangalore, India</div>
+            <div class="tl-role">Software System Engineer</div>
+            <div class="tl-company">IBM · Bangalore, India</div>
           </div>
-          <div class="exp-dur">03/2021 - 04/2022</div>
+          <div class="tl-dur">03/2021 - 04/2022</div>
         </div>
         
-        <ul class="exp-bullets">
+        <ul class="tl-bullets">
           <li>Designed and implemented scalable APIs, transitioning an ASP.NET service to an Angular web application and .NET Core microservices architecture, resulting in a 45% increase in performance and a $55K reduction in operational costs per quarter.</li><li>Created enterprise applications to facilitate the addition of new internet services to existing packages, improving customer satisfaction by 30% and contributing to a 15% increase in the Internet Line of Business (LOB) revenue for Canada&#39;s Largest Communications Provider.</li><li>Optimized business logic and performed critical bug fixes for the order capturing application, leading to a 20% increase in user engagement and a 15% reduction in service integration time.</li>
         </ul>
         
       </div>
-      
-      <div class="exp-card">
-        <div class="exp-head">
+    </div>
+    
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-head">
           <div>
-            <div class="exp-role">Software Engineer</div>
-            <div class="exp-company">DreamOrbit &nbsp;·&nbsp; Bangalore, India</div>
+            <div class="tl-role">Software Engineer</div>
+            <div class="tl-company">DreamOrbit · Bangalore, India</div>
           </div>
-          <div class="exp-dur">05/2017 - 02/2021</div>
+          <div class="tl-dur">05/2017 - 02/2021</div>
         </div>
         
-        <ul class="exp-bullets">
+        <ul class="tl-bullets">
           <li>Designed and implemented a robust microservices architecture to seamlessly synchronize data between legacy and modern applications, ensuring real-time, bidirectional data consistency. Improved operational efficiency by 40%, reduced data inconsistencies by 95%, and enhanced customer satisfaction by enabling smooth transitions to the new application.</li><li>Designed and developed the Customer Management Module for North America&#39;s largest logistics company, enabling the onboarding of 20,000 new customers in a quarter, a 56% increase from the previous quarter.</li><li>Collaborated with the project architect and team lead to successfully integrate Active Directory authentication with JWT and streamline transaction management within APIs.</li><li>Implemented comprehensive unit testing and conducted extensive code refactoring, achieving 85% code coverage. Applied design patterns to enhance code structure, significantly improving code quality, reducing bugs by 70%, and enhancing maintainability, resulting in more reliable and efficient project delivery.</li>
         </ul>
         
       </div>
-      
-    </section>
+    </div>
     
-
-    
-
-    
-    <section>
-      <div class="section-comment">// languages & tools</div>
-      <div class="section-keyword">const skills = [</div>
-      <div class="skill-chips">
-        
-        
-        <span class="chip chip-cyan">C#</span>
-        
-        <span class="chip chip-green">.NET Core</span>
-        
-        <span class="chip chip-purple">Angular</span>
-        
-        <span class="chip chip-orange">SQL Server</span>
-        
-        <span class="chip chip-cyan">Web API</span>
-        
-        <span class="chip chip-green">Entity Framework</span>
-        
-        <span class="chip chip-purple">LINQ</span>
-        
-        <span class="chip chip-orange">Microservices</span>
-        
-        <span class="chip chip-cyan">Design Patterns</span>
-        
-        <span class="chip chip-green">Unit Testing</span>
-        
-        <span class="chip chip-purple">GIT</span>
-        
-        <span class="chip chip-orange">Docker</span>
-        
-        <span class="chip chip-cyan">TFS</span>
-        
-        <span class="chip chip-green">OOP</span>
-        
-        <span class="chip chip-purple">SOLID</span>
-        
-        <span class="chip chip-orange">RabbitMQ</span>
-        
-        <span class="chip chip-cyan">CI/CD</span>
-        
-        <span class="chip chip-green">Azure DevOps</span>
-        
-        <span class="chip chip-purple">Xunit</span>
-        
-        <span class="chip chip-orange">Backend</span>
-        
-        <span class="chip chip-cyan">Full Stack</span>
-        
-        <span class="chip chip-green">AWS SNS</span>
-        
-        <span class="chip chip-purple">AWS S3</span>
-        
-        <span class="chip chip-orange">GraphQL</span>
-        
-        <span class="chip chip-cyan">REST API</span>
-        
-        <span class="chip chip-green">AGILE</span>
-        
-        <span class="chip chip-purple">TDD</span>
-        
-        <span class="chip chip-orange">DDD</span>
-        
-        <span class="chip chip-cyan">ASP.NET</span>
-        
-        <span class="chip chip-green">Active Directory</span>
-        
-        <span class="chip chip-purple">JWT</span>
-        
-      </div>
-    </section>
-    
-
-    
-    <section>
-      <div class="section-comment">// education</div>
-      <div class="section-keyword">const education = [</div>
-      
-      <div class="edu-item">
-        <div class="edu-school">Biju Patnaik University of Technology</div>
-        <div class="edu-degree">BTech in Computer Science &amp; Engineering</div>
-        <div class="edu-year">2014</div>
-      </div>
-      
-    </section>
-    
-
-    
-
-    <footer>// generated with CareerPortal · Baladeveswar Biswavikash Nandi</footer>
-  </main>
+  </div>
 </div>
+<div class="divider"></div>
+
+
+
+
+
+<div class="section" id="education">
+  <div class="section-header">
+    <div class="section-label">Academic background</div>
+    <h2 class="section-title">Education</h2>
+  </div>
+  <div class="edu-grid">
+    
+    <div class="edu-card">
+      <div class="edu-school">Biju Patnaik University of Technology</div>
+      <div class="edu-degree">BTech in Computer Science &amp; Engineering</div>
+      <div class="edu-year">2014</div>
+    </div>
+    
+  </div>
+</div>
+<div class="divider"></div>
+
+
+
+
+<footer>Crafted with ❤ and CareerPortal · Baladeveswar Biswavikash Nandi</footer>
 
 </body>
 </html>
